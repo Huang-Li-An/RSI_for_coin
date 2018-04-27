@@ -17,11 +17,17 @@ RSI_for_coin!
 
 用法：
 	Ubuntu環境：
-		到etc/crontab，編輯此檔案
-		輸入：* */1 * * * root python3 main.py的路徑 -coin eth -period 2 -base 12 -sender xxx@gmail.com -passwd xxx -receiver yyy@gmail.com -mode 1
+		到etc/crontab，編輯此檔案(都使用絕對路徑)
+		輸入：
+		0 * * * * root python3 main.py(絕對路徑) -coin eth -period 2 -base 12 -sender xxx@gmail.com -passwd xxx -receiver yyy@gmail.com -mode 1 > xxx.log(絕對路徑) 2>&1
+
+		此設定能控制每小時執行，並且把output記錄下來
 
 
 *********
-第一次使用時，必須先到Huobi.py的__init__，將os.chdir()，指定到main.py的資料夾
-
-
+1.第一次使用時，必須先到Huobi.py的__init__，將os.chdir()，指定到main.py的資料夾
+2.crontab必須要設定python的環境變數，否則會找不到一些library
+  方法:到terminal執行python3
+  	  import xxx
+  	  xxx.__file__  (可以得到該library的路徑，假設是/home/doubt_even/.local/lib/python2.7/site-packages/)
+  接著到crontab的文件裡添加：PYTHONPATH=$PYTHONPATH:/home/doubt_even/.local/lib/python2.7/site-packages/
