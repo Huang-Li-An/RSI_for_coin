@@ -22,7 +22,8 @@ class Huobi:
         self.i_period = i_period
         self.i_base = i_base
         self.i_num =  (i_base*2+1+10)*i_period  # 固定算出可以算10個rsi的量，總共需要這麼多小時的資料量
-        os.chdir('/Users/huangli-an/Documents/Github/RSI_for_coin')
+        #print(os.getcwd())
+        os.chdir('/home/lian/桌面/RSI_for_coin')
 
     def getData(self):
         html = requests.get( self.s_url.format( self.s_coin, str(self.i_num) ) ).text
@@ -134,10 +135,15 @@ class Huobi:
         l_l.reverse()
         f.close()
 
-        l_tmp = [ i for i in range(1,11) ]
+        l_tmp = [ i for i in range(0, self.i_period*10, self.i_period) ]
+        group_labels = [ i for i in range(0, self.i_period*10, self.i_period) ]
+        group_labels.reverse()
+
         plt.plot( l_tmp, l_s )
         plt.plot( l_tmp, l_l )
+        plt.xticks( l_tmp, group_labels)
         plt.legend([ str(self.i_base*self.i_period) + 'hours', str(self.i_base*2*self.i_period)+ 'hours'])
+        plt.xlabel( 'Hours ago' )
         plt.ylabel( 'RSI number' )
         plt.title( self.s_coin)
         if ( mode == 1 ):
@@ -201,8 +207,9 @@ class Huobi:
 
             self.calculateRSI(self.i_base*2)
             self.writeRSI(self.i_base*2)
-            #self.checkTiming()
+            self.checkTiming()
 
         elif ( mode == 2 ):
             # to see RSI picture
             self.drawPicture(2)
+            #self.checkTiming()
