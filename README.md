@@ -17,9 +17,12 @@ RSI_for_coin!
 
 用法：
 	Ubuntu環境：
-		到etc/crontab，編輯此檔案(都使用絕對路徑)
+		terminal-> crontab -e，編輯此檔案(都使用絕對路徑)
 		輸入：
-		0 * * * * root python3 main.py(絕對路徑) -coin eth -period 2 -base 12 -sender xxx@gmail.com -passwd xxx -receiver yyy@gmail.com -mode 1 > xxx.log(絕對路徑) 2>&1
+		SHELL=/bin/sh
+		PATH=/bin:/sbin:/usr/bin:/sur/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+		PYTHONPATH=$PYTHONPATH:/home/lian/.local/lib/python3.5/site-packages/
+		1 * * * * python3 main.py(絕對路徑) -coin eth -period 2 -base 12 -sender xxx@gmail.com -passwd xxx -receiver yyy@gmail.com -mode 1 > xxx.log(絕對路徑) 2>&1
 
 		此設定能控制每小時執行，並且把output記錄下來
 
