@@ -1,5 +1,7 @@
 import requests
 import json
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import time
 import os
@@ -184,15 +186,15 @@ class Huobi:
                 user = SendMail(self.s_sender, self.s_passwd, self.s_receiver, self.s_pname)
                 user.send('死亡交叉，快賣啊！！！\n'+ self.s_content)
 
-        if ( f_sNow > 80.0 ):
+        if ( f_sNow >= 80.0 ):
             self.drawPicture(1)
             user = SendMail(self.s_sender, self.s_passwd, self.s_receiver, self.s_pname)
             user.send('RSI大於80了，準備要賣囉！！！\n' + self.s_content)
 
-        if ( f_sNow < 20.0 ):
+        if ( f_sNow <= 25.0 ):
             self.drawPicture(1)
             user = SendMail(self.s_sender, self.s_passwd, self.s_receiver, self.s_pname)
-            user.send('RSI小於20了，準備要買囉！！！\n' + self.s_content)
+            user.send('RSI小於25了，準備要買囉！！！\n' + self.s_content)
 
 
 
@@ -213,3 +215,6 @@ class Huobi:
             # to see RSI picture
             self.drawPicture(2)
             #self.checkTiming()
+        elif ( mode == 3 ):
+            # for test
+            self.checkTiming()
