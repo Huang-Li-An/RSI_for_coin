@@ -1,10 +1,13 @@
 import requests
 import json
+import os
 import matplotlib
-matplotlib.use('Agg')
+if os.environ.get('DISPLAY','') == '':
+    matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 import time
-import os
+
 from SendMail import *
 
 class Huobi:
@@ -201,6 +204,7 @@ class Huobi:
     def start(self, mode ):
         if ( mode == 1 ):
             # excute in every period
+            
             self.getData()
             self.writeData()
 
