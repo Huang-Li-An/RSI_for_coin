@@ -50,20 +50,6 @@ class Huobi:
             f.write( self.l_data[i] + '\n')
         f.close()
 
-    '''
-    def writeNewData(self, coin ):
-        #寫入新資料到txt的第一行,並刪除最後一行
-        path = './' + coin + '/' + coin + '_data.txt'
-        f = open(path,'r')
-        l = f.readlines()
-        l.insert(0, str(self.data[0]) + '\n')
-        f.close()
-
-        f = open(path, 'w')
-        for i in l[:-1]:
-            f.write(i)
-        f.close()
-    '''
 
     def calculateRSI(self, i_base):
         path = './' + self.s_coin + '/' + self.s_coin + '_data.txt'
@@ -89,8 +75,11 @@ class Huobi:
 
                 l_gap.append( f_tmp )
 
-            self.l_rsi.append( (f_raise/sum(l_gap))/self.i_period*100 )
 
+            f_raise /= i_base
+            f_total = sum(l_gap)/i_base
+            self.l_rsi.append( (f_raise/f_total)*100  )
+        
 
         print( 'New RSI_' + str(i_base) + ': ' + str(self.l_rsi[0]) )
 
@@ -102,20 +91,6 @@ class Huobi:
             f.write(str(i) + '\n')
         f.close()
 
-    '''
-    def writeNewRSI(self, coin, base):
-        path = './' + coin + '/' + coin + '_RSI_' + str(base) + '.txt'
-        self.rsi.append(100)
-        f = open(path, 'r')
-        l = f.readlines()
-        l.insert(0, str(self.rsi[0]) +'\n')
-        f.close()
-
-        f = open(path, 'w')
-        for i in l[:-1]:
-            f.write(i)
-        f.close()
-    '''
 
     def drawPicture(self, mode):
         path = './' + self.s_coin + '/' + self.s_coin + '_RSI_' + str(self.i_base) +'.txt'
@@ -189,10 +164,10 @@ class Huobi:
                 user = SendMail(self.s_sender, self.s_passwd, self.s_receiver, self.s_pname)
                 user.send('死亡交叉，快賣啊！！！\n'+ self.s_content)
 
-        if ( f_sNow >= 80.0 ):
+        if ( f_sNow >= 75.0 ):
             self.drawPicture(1)
             user = SendMail(self.s_sender, self.s_passwd, self.s_receiver, self.s_pname)
-            user.send('RSI大於80了，準備要賣囉！！！\n' + self.s_content)
+            user.send('RSI大於75了，準備要賣囉！！！\n' + self.s_content)
 
         if ( f_sNow <= 25.0 ):
             self.drawPicture(1)
